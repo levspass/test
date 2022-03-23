@@ -49,9 +49,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/classes/Category.php');
                         <?php
                         // получаем соединение с базой данных
                         $database = new database();
-                        $db = $database->getConnection();
+                        $link = $database->getConnection();
 
-                        $category = new Category($db);
+                        $category = new Category($link);
 
                         // читаем категории товаров из базы данных
                         $stmt = $category->read();

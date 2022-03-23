@@ -7,28 +7,19 @@ class database
     private $db_name = "junior_developer_test_task";
     private $username = "root";
     private $password = "";
-    public $conn;
+
+    public $link;
 
     // получение соединения с базой данных
     public function getConnection() {
-        $this->conn = null;
+        $this->link = null;
 
         try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->link = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
         } catch(PDOException $exception) {
             echo "Ошибка соединения: " . $exception->getMessage();
         }
 
-        return $this->conn;
+        return $this->link;
     }
-
-    /*
-    public function query($sql) {
-        $result = mysqli_query($this->link, $sql);
-
-        if ($result == false) {
-            print("Произошла ошибка при выполнении запроса" . "<br>");
-        }
-    }
-    */
 }

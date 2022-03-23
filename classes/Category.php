@@ -2,43 +2,44 @@
 
 
 class Category {
-
     // подключение к базе данных и имя таблицы
-    private $conn;
+    private $link;
     private $table_name = "categories";
 
+    /*
     // свойства объекта
     public $id;
     public $name;
+    */
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct($link) {
+        $this->link = $link;
     }
 
     // данный метод используется в раскрывающемся списке
     function read() {
-
         // запрос MySQL: выбираем столбцы в таблице «categories»
-        $query = "SELECT id, name FROM " . $this->table_name; // ORDER BY name
+        $query = 'SELECT `id`, `name` FROM ' . $this->table_name; // ORDER BY `name`
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
+        $result = $this->link->prepare($query);
+        $result->execute();
 
-        return $stmt;
+        return $result;
     }
 
+    /*
     // получение названия категории по её ID
     function readName() {
-
         // запрос MySQL
-        $query = "SELECT name FROM " . $this->table_name . " WHERE id = ? limit 0,1";
+        $query = 'SELECT `name` FROM ' . $this->table_name; // WHERE `id` = ? limit 0, 1
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->id);
-        $stmt->execute();
+        $result = $this->link->prepare($query);
+        $result->bindParam(1, $this->id);
+        $result->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
 
         $this->name = $row['name'];
     }
+    */
 }

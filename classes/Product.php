@@ -4,7 +4,7 @@
 class Product
 {
     // подключение к базе данных и имя таблицы
-    private $conn;
+    private $link;
     private $table_name = "products";
 
     // свойства объекта
@@ -14,8 +14,8 @@ class Product
     public $price;
     public $category_id;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct($link) {
+        $this->link = $link;
     }
 
     // метод создания товара
@@ -28,7 +28,7 @@ class Product
             category_id=:category_id
         ";
 
-        $stmt = $this->conn->prepare($query);
+        $result = $this->link->prepare($query);
 
         // опубликованные значения
         $this->sku = htmlspecialchars(strip_tags($this->sku));
@@ -37,27 +37,15 @@ class Product
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
         // привязываем значения
-        $stmt->bindParam(":sku", $this->sku);
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":category_id", $this->category_id);
+        $result->bindParam(":sku", $this->sku);
+        $result->bindParam(":name", $this->name);
+        $result->bindParam(":price", $this->price);
+        $result->bindParam(":category_id", $this->category_id);
 
-        if ($stmt->execute()) {
+        if ($result->execute()) {
             return true;
         } else {
             return false;
         }
     }
-
-    /*
-    public function __construct($sku, $name, $price, $productType)
-    {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->price = $price;
-        $this->productType = $productType;
-    }
-    */
-
-    //abstract public function getInsertSQL();
 }

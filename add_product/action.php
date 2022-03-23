@@ -17,10 +17,10 @@ function debug($data) {
 
 // получаем соединение с базой данных
 $database = new database();
-$db = $database->getConnection();
+$link = $database->getConnection();
 
 if ($_POST) {
-    $product = new Product($db);
+    $product = new Product($link);
 
     // установим значения свойствам товара
     $product->sku = $_POST['sku'];
